@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thank You - Redirecting to Alifwe.com</title>
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <script>tailwind.config={theme:{extend:{colors:{primary:'#eae4d4',secondary:'#000000'},borderRadius:{'none':'0px','sm':'4px',DEFAULT:'8px','md':'12px','lg':'16px','xl':'20px','2xl':'24px','3xl':'32px','full':'9999px','button':'8px'}}}}</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+    <style>
+        :where([class^="ri-"])::before { content: "\f3c2"; }
+        body {
+            background-color: #eae4d4;
+            color: #000000;
+            font-family: 'Inter', sans-serif;
+        }
+        .spinner {
+            border: 3px solid rgba(0, 0, 0, 0.1);
+            border-top: 3px solid #000000;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .fade-in {
+            animation: fadeIn 1.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center px-4">
+    <div class="w-full max-w-md text-center fade-in">
+        <h1 class="font-['Pacifico'] text-4xl mb-6">Alifwe</h1>
+        
+        <h2 class="text-2xl font-semibold mb-3">Thank You!</h2>
+        
+        <p class="mb-6">Your request has been processed successfully.</p>
+        
+        <div class="flex flex-col items-center justify-center mb-8">
+            <div class="spinner mb-4"></div>
+            <p class="text-lg">Redirecting to Alifwe.com in <span id="countdown">5</span> seconds...</p>
+        </div>
+        
+        <div class="w-full bg-black/10 h-2 rounded-full mb-8">
+            <div id="progress-bar" class="bg-black h-2 rounded-full w-0 transition-all duration-1000"></div>
+        </div>
+        
+        <p class="mb-2">If you are not redirected automatically, please click below:</p>
+        
+        <a href="https://alifwe.com" class="inline-flex items-center justify-center px-6 py-3 bg-black text-primary font-medium !rounded-button hover:bg-black/80 transition-all whitespace-nowrap">
+            Go to Alifwe.com
+            <span class="w-5 h-5 flex items-center justify-center ml-2">
+                <i class="ri-arrow-right-line"></i>
+            </span>
+        </a>
+    </div>
+
+    <script id="redirect-script">
+        document.addEventListener('DOMContentLoaded', function() {
+            let count = 5;
+            const countdownElement = document.getElementById('countdown');
+            const progressBar = document.getElementById('progress-bar');
+            
+            // Update progress bar width
+            function updateProgressBar(percentage) {
+                progressBar.style.width = percentage + '%';
+            }
+            
+            // Start with 0% progress
+            updateProgressBar(0);
+            
+            const interval = setInterval(function() {
+                count--;
+                countdownElement.textContent = count;
+                
+                // Update progress bar (100% divided by 5 seconds = 20% per second)
+                updateProgressBar(100 - (count * 20));
+                
+                if (count <= 0) {
+                    clearInterval(interval);
+                    window.location.href = 'https://alifwe.com';
+                }
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
